@@ -1,0 +1,16 @@
+/* ── MainLayout.css ── */
+
+.main-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content sits below the fixed navbar */
+.main-content {
+  flex: 1;
+  /* padding-top equals navbar height so content isn't hidden behind it */
+  padding-top: var(--navbar-height);
+  position: relative;
+  z-index: 1;
+}

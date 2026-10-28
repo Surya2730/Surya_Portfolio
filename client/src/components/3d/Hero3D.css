@@ -1,0 +1,80 @@
+.hero-3d-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.hero-3d-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+  outline: none;
+}
+
+/* ── Fallback ── */
+.hero-3d-fallback {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fallback-orb-glow {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(139, 92, 246, 0.2) 50%, transparent 70%);
+  filter: blur(28px);
+  animation: pulse-glow 3s infinite ease-in-out;
+}
+
+.fallback-polyhedron {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fallback-core {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  animation: float 4s ease-in-out infinite, rotate-slow 16s linear infinite;
+  box-shadow: 0 0 35px rgba(99, 102, 241, 0.5);
+}
+
+.fallback-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px dashed rgba(6, 182, 212, 0.5);
+}
+
+.fallback-ring-outer {
+  width: 160px;
+  height: 160px;
+  animation: rotate-slow 20s linear infinite reverse;
+}
+
+.fallback-ring-inner {
+  width: 130px;
+  height: 130px;
+  border-color: rgba(139, 92, 246, 0.4);
+  animation: rotate-slow 12s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .hero-3d-wrapper {
+    min-height: 320px;
+  }
+}
+

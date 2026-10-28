@@ -1,0 +1,45 @@
+.not-found-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+}
+
+.not-found-card {
+  max-width: 540px;
+  width: 100%;
+  text-align: center;
+  padding: var(--space-12) var(--space-8);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.not-found-icon-wrap {
+  margin-bottom: var(--space-4);
+  color: var(--color-accent-3);
+  filter: drop-shadow(0 0 16px rgba(6, 182, 212, 0.4));
+}
+
+.not-found-code {
+  font-size: clamp(4rem, 10vw, 7rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+
+.not-found-title {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-4);
+  color: var(--color-text);
+}
+
+.not-found-desc {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-8);
+  max-width: 420px;
+}
+
