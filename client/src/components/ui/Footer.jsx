@@ -116,10 +116,10 @@ function Footer() {
         {/* Bottom bar */}
         <div className="footer-bottom">
           <p className="footer-copyright">
-            © {CURRENT_YEAR} Surya Kumar T 
+            © {CURRENT_YEAR} Surya Kumar T
             {/* Built with{' '} */}
             <Heart size={13} className="footer-heart" aria-label="love" />{' '}
-            {/* using MERN stack */}
+            {/* using MERN stack */} 
           </p>
           <button
             className="footer-back-top"
