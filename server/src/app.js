@@ -32,17 +32,19 @@ app.set("trust proxy", 1);
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 // Cross-Origin Resource Sharing: allows your React frontend to call this API
 // In production, only allow requests from your actual frontend domain
+const clientUrl = process.env.CLIENT_URL;
 const allowedOrigins = [
-  process.env.CLIENT_URL || "http://localhost:5173",
-  // Add your Vercel domain here during Phase 6 deployment
+  "http://localhost:5173",
+  ...(clientUrl ? clientUrl.split(",").map((url) => url.trim().replace(/\/$/, "")) : []),
 ];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g., Postman, server-to-server)
+      // Allow requests with no origin (e.g., Postman, health checks, server-to-server)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
+      const normalizedOrigin = origin.replace(/\/$/, "");
+      if (allowedOrigins.includes(normalizedOrigin)) {
         return callback(null, true);
       }
       return callback(new Error(`CORS: Origin ${origin} not allowed`));
