@@ -17,23 +17,6 @@
   margin-bottom: var(--space-5);
 }
 
-.achievement-top-right {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.achievement-link-icon {
-  color: var(--color-text-muted);
-  transition: color var(--ease-fast);
-  display: flex;
-  align-items: center;
-}
-
-.achievement-link-icon:hover {
-  color: var(--color-accent);
-}
-
 .achievement-icon-wrap {
   width: 50px;
   height: 50px;
@@ -52,8 +35,8 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-accent-3);
-  background: rgba(6, 182, 212, 0.1);
-  border: 1px solid rgba(6, 182, 212, 0.25);
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.25);
   padding: 0.15rem 0.5rem;
   border-radius: var(--radius-full);
 }
@@ -84,11 +67,160 @@
   font-size: var(--text-sm);
   color: var(--color-text-muted);
   line-height: 1.7;
+  flex: 1;
 }
 
+/* ── Bottom Action Buttons Row ── */
+.achievement-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+/* Shared base for both action buttons */
+.achieve-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all var(--ease-fast);
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+/* "View Profile" — external link style (LeetCode orange tint) */
+.achieve-profile-btn {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.35);
+  color: #fbbf24;
+}
+.achieve-profile-btn:hover {
+  background: rgba(251, 191, 36, 0.2);
+  border-color: #fbbf24;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+
+/* "View Certificate" — green accent style */
+.achieve-cert-btn {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: var(--color-accent);
+}
+.achieve-cert-btn:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+}
+
+.achieve-action-btn:active {
+  transform: translateY(0);
+}
+
+/* ── Certificate PDF Modal ── */
+.cert-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  animation: fadeIn 0.2s ease both;
+}
+
+.cert-modal-card {
+  background: #071410;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7),
+              0 0 40px rgba(16, 185, 129, 0.15);
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeInUp 0.25s ease both;
+}
+
+.cert-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+  background: rgba(16, 185, 129, 0.05);
+  flex-shrink: 0;
+}
+
+.cert-modal-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--color-accent);
+}
+
+.cert-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-border-glass);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--ease-fast);
+  font-family: var(--font-body);
+}
+
+.cert-modal-close:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #f87171;
+  transform: scale(1.1);
+}
+
+.cert-modal-iframe {
+  width: 100%;
+  flex: 1;
+  min-height: 75vh;
+  border: none;
+  background: #fff;
+}
+
+/* ── Responsive ── */
 @media (max-width: 640px) {
   .achievements-grid {
     grid-template-columns: 1fr;
   }
-}
 
+  .cert-modal-backdrop {
+    padding: var(--space-3);
+  }
+
+  .cert-modal-card {
+    border-radius: var(--radius-lg);
+    max-height: 95vh;
+  }
+
+  .cert-modal-iframe {
+    min-height: 70vh;
+  }
+}

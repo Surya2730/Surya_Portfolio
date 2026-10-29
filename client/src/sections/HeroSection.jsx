@@ -1,22 +1,15 @@
 /**
- * HeroSection.jsx — Interactive 3D Hero Section
+ * HeroSection.jsx — Hero Section
  *
- * Displays:
- *   - Name, role badge, headline, and professional introduction
- *   - Primary CTA buttons: View Projects, Contact Me, Download Resume
- *   - Social links: GitHub & LinkedIn
- *   - 3D interactive scene (Hero3D)
- *   - Scroll indicator to guide visitors down the page
+ * Right column: Full profile photo with CSS meteor/shooting-star background.
+ * The 3D bubble and floating circle overlay have been removed.
+ * Meteor trails are pure CSS — no Three.js, no external assets.
  */
 
-import React, { lazy, Suspense } from 'react'
 import { ArrowDown, FolderGit2, Send, Download } from 'lucide-react'
 import { Github, Linkedin, Leetcode } from '../components/ui/Icons'
 import { PERSONAL_INFO } from '../data/portfolioData'
 import './HeroSection.css'
-
-// Lazy load 3D scene to keep initial load lightweight and split large 3D bundles
-const Hero3D = lazy(() => import('../components/3d/Hero3D'))
 
 export default function HeroSection() {
   const handleScroll = (id) => {
@@ -27,22 +20,18 @@ export default function HeroSection() {
       const elementRect = el.getBoundingClientRect().top
       const elementPosition = elementRect - bodyRect
       const offsetPosition = elementPosition - offset
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      })
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
     }
   }
 
   return (
     <section id="home" className="hero-section" aria-label="Introduction">
-      {/* Decorative gradient glow backgrounds */}
+      {/* Ambient glow orbs */}
       <div className="hero-glow-1" aria-hidden="true" />
       <div className="hero-glow-2" aria-hidden="true" />
 
       <div className="container hero-container">
-        {/* Left: Text & Actions */}
+        {/* ── Left: Text & Actions ── */}
         <div className="hero-content">
           <div className="hero-badge animate-fade-in">
             <span className="hero-badge-dot" />
@@ -61,87 +50,93 @@ export default function HeroSection() {
             {PERSONAL_INFO.shortBio}
           </p>
 
-          {/* Action Buttons */}
+          {/* Action Buttons — All 3 in a single line */}
           <div className="hero-actions">
             <button
               onClick={() => handleScroll('projects')}
-              className="btn btn-primary btn-lg"
+              className="btn btn-primary hero-btn"
             >
-              <FolderGit2 size={18} />
+              <FolderGit2 size={17} />
               <span>View Projects</span>
             </button>
 
             <button
               onClick={() => handleScroll('contact')}
-              className="btn btn-outline btn-lg"
+              className="btn btn-outline hero-btn"
             >
-              <Send size={18} />
+              <Send size={17} />
               <span>Contact Me</span>
             </button>
 
             <a
               href={PERSONAL_INFO.resumeUrl}
               download="Surya_Kumar_T_Resume.pdf"
-              className="btn btn-ghost btn-lg hero-resume-btn"
+              className="btn btn-ghost hero-btn hero-resume-btn"
               title="Download Resume"
             >
-              <Download size={18} />
-              <span>Resume</span>
+              <Download size={17} />
+              <span>Download Resume</span>
             </a>
           </div>
 
           {/* Social Links */}
           <div className="hero-socials">
             <span className="hero-socials-label">Connect:</span>
-            <a
-              href={PERSONAL_INFO.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero-social-link"
-              aria-label="GitHub Profile"
-            >
+            <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer"
+              className="hero-social-link" aria-label="GitHub Profile">
               <Github size={20} />
             </a>
-            <a
-              href={PERSONAL_INFO.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero-social-link"
-              aria-label="LinkedIn Profile"
-            >
+            <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer"
+              className="hero-social-link" aria-label="LinkedIn Profile">
               <Linkedin size={20} />
             </a>
-            <a
-              href={PERSONAL_INFO.leetcode}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero-social-link"
-              aria-label="LeetCode Profile (400+ Problems Solved)"
-              title="LeetCode (400+ Problems Solved)"
-            >
+            <a href={PERSONAL_INFO.leetcode} target="_blank" rel="noopener noreferrer"
+              className="hero-social-link" aria-label="LeetCode Profile (400+ Problems Solved)"
+              title="LeetCode (400+ Problems Solved)">
               <Leetcode size={20} />
             </a>
           </div>
         </div>
 
-        {/* Right: 3D Scene + Floating Photo Over 3D Bubble */}
-        <div className="hero-3d-column">
-          <Suspense fallback={<div className="hero-3d-fallback"><div className="fallback-orb-glow" /></div>}>
-            <Hero3D />
-          </Suspense>
+        {/* ── Right: Profile Photo + Meteor Background ── */}
+        <div className="hero-photo-column" aria-hidden="true">
+          {/* CSS meteor shooting stars */}
+          <div className="hero-meteor-field">
+            {[...Array(12)].map((_, i) => (
+              <span key={i} className={`hero-meteor hero-meteor-${i + 1}`} />
+            ))}
+          </div>
 
-          {/* User Photo positioned right over the 3D bubble */}
-          <div className="hero-bubble-photo-container animate-float" aria-hidden="true">
-            <div className="hero-bubble-photo-glow" />
-            <div className="hero-bubble-photo-frame">
+          {/* Glowing aura behind the photo */}
+          <div className="hero-photo-aura" />
+
+          {/* Profile photo card wrapper with flip animation */}
+          <div className="hero-photo-card-wrapper">
+            <div className="hero-photo-card hero-phone-frame">
+              {/* Phone speaker grill & Dynamic Island camera */}
+              <div className="phone-speaker" />
+              <div className="phone-island">
+                <span className="phone-camera-lens" />
+              </div>
+
+              {/* Glass screen reflection sweep */}
+              <div className="phone-screen-sheen" />
+
               <img
-                src={PERSONAL_INFO.photoUrl}
-                alt="Surya Kumar T"
-                className="hero-bubble-photo-img"
+                src="/profile white 2.jpeg"
+                alt="Surya Kumar T — Full Stack Developer"
+                className="hero-photo-img"
               />
+
+              {/* Bottom home indicator bar */}
+              <div className="phone-home-indicator" />
+
+              {/* Subtle overlay gradient at bottom */}
+              <div className="hero-photo-overlay" />
             </div>
-            <div className="hero-bubble-orbit hero-bubble-orbit-1" />
-            <div className="hero-bubble-orbit hero-bubble-orbit-2" />
+
+            {/* Decorative corner accent — bottom only */}
+            <div className="hero-corner hero-corner-br" />
           </div>
         </div>
       </div>

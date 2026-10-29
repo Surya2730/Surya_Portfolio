@@ -30,7 +30,7 @@
   width: 260px;
   height: 260px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(139, 92, 246, 0.2) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.45) 0%, rgba(5, 150, 105, 0.2) 50%, transparent 70%);
   filter: blur(28px);
   animation: pulse-glow 3s infinite ease-in-out;
 }
@@ -47,10 +47,10 @@
 .fallback-core {
   width: 100px;
   height: 100px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+  background: linear-gradient(135deg, #10b981, #059669, #34d399);
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
   animation: float 4s ease-in-out infinite, rotate-slow 16s linear infinite;
-  box-shadow: 0 0 35px rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 35px rgba(16, 185, 129, 0.5);
 }
 
 .fallback-ring {

@@ -1,44 +1,127 @@
-/* ── LoadingScreen.css ── */
+/* ── LoadingScreen.css ──
+   Animation timeline:
+   0.0s  gun slides in
+   0.6s  gun fully visible, trigger starts pulling
+   1.0s  trigger fully pulled, bullet fires + muzzle flash
+   1.3s  bullet hits square → impact flash
+   1.6s  photo fades in inside square
+   1.8s  name / role / progress fade in
+*/
 
+/* ── Screen wrapper ── */
 .loading-screen {
   position: fixed;
   inset: 0;
-  background: var(--color-bg);
+  background: #050f0a;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: var(--z-loading);
   overflow: hidden;
-  animation: fadeIn 0.4s ease both;
+  animation: fadeIn 0.3s ease both;
 }
 
-/* Background ambient orbs */
-.loading-orb {
+/* ── Ambient orbs ── */
+.ls-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(90px);
   pointer-events: none;
 }
-.loading-orb-1 {
+.ls-orb-1 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.12), transparent 70%);
-  top: -100px;
-  left: -100px;
-  animation: pulse-glow 4s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.1), transparent 70%);
+  top: -120px;
+  left: -120px;
+  animation: ls-orb-pulse 4s ease-in-out infinite;
 }
-.loading-orb-2 {
+.ls-orb-2 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.1), transparent 70%);
-  bottom: -80px;
-  right: -80px;
-  animation: pulse-glow 4s ease-in-out infinite 2s;
+  background: radial-gradient(circle, rgba(5, 150, 105, 0.08), transparent 70%);
+  bottom: -100px;
+  right: -100px;
+  animation: ls-orb-pulse 4s ease-in-out infinite 2s;
+}
+@keyframes ls-orb-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.12); }
 }
 
-/* ── Geometric Shape ── */
-.loading-shape-wrapper {
+/* ─────────────────────────────────────────
+   AK-47 GUN
+   Shifted slightly down (calc(50% + 12px)) so the barrel line
+   is positioned accurately and aesthetically.
+───────────────────────────────────────── */
+.ls-gun-wrap {
+  position: absolute;
+  top: calc(50% + 12px);
+  left: 0;
+  transform: translateY(-50%);
+  width: 380px;
+  height: 130px;
+  animation: ls-gun-slide-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+
+.ls-gun-svg {
+  width: 380px;
+  height: 130px;
+  filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.65));
+  animation: ls-gun-recoil 0.18s ease-out 1.0s both;
+}
+
+/* Trigger pull animation — applied to the <g> element */
+.ls-trigger {
+  animation: ls-trigger-pull 0.35s ease-in 0.65s both;
+}
+
+/* Muzzle flash — sits right at the gun barrel entrance (x = 374px) */
+.ls-muzzle-flash {
+  position: absolute;
+  top: 50%;
+  left: 374px;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  /* hidden by default — only visible during animation */
+  opacity: 0;
+  animation: ls-flash 0.28s ease-out 1.0s forwards;
+}
+.ls-muzzle-flash svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ─────────────────────────────────────────
+   BULLET
+   Starts directly at the gun barrel entrance (x = 378px, top = calc(50% + 12px))
+   and flies horizontally to the screen centre (50vw).
+───────────────────────────────────────── */
+.ls-bullet {
+  position: absolute;
+  top: calc(50% + 12px);
+  /* Starts right at the gun barrel entrance */
+  left: 378px;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 10px;
+  /* 100% hidden before gun trigger */
+  opacity: 0;
+  z-index: 5;
+  /* fires after trigger pull + muzzle flash (1.05s), travels 0.35s */
+  animation: ls-bullet-fly 0.35s cubic-bezier(0.2, 0, 0.6, 1) 1.05s forwards;
+}
+.ls-bullet svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ─────────────────────────────────────────
+   ROTATING SQUARE + PHOTO
+───────────────────────────────────────── */
+.ls-shape-wrap {
   position: absolute;
   inset: 0;
   display: flex;
@@ -47,7 +130,20 @@
   pointer-events: none;
 }
 
-.loading-shape {
+/* Impact flash on the square */
+.ls-impact-flash {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border-radius: 20px;
+  background: rgba(255, 215, 0, 0.55);
+  opacity: 0;
+  z-index: 2;
+  /* fires right as bullet arrives: bullet ends at ~1.39s */
+  animation: ls-impact 0.35s ease-out 1.38s both;
+}
+
+.ls-shape {
   position: relative;
   width: 200px;
   height: 200px;
@@ -56,47 +152,57 @@
   justify-content: center;
 }
 
-.loading-shape-inner {
-  width: 90px;
-  height: 90px;
-  border-radius: var(--radius-lg);
+.ls-shape-inner {
+  width: 100px;
+  height: 100px;
+  border-radius: 18px;
   overflow: hidden;
-  border: 2px solid rgba(99, 102, 241, 0.7);
-  animation: rotate-slow 8s linear infinite, pulse-glow 2.5s ease-in-out infinite;
+  border: 2px solid rgba(16, 185, 129, 0.7);
+  animation: ls-shape-rotate 8s linear infinite,
+             ls-shape-glow   2.5s ease-in-out infinite;
   transform-style: preserve-3d;
-  box-shadow: 0 0 40px rgba(99, 102, 241, 0.5), inset 0 0 15px rgba(6, 182, 212, 0.3);
-  background: var(--color-bg);
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.5),
+              inset 0 0 15px rgba(52, 211, 153, 0.25);
+  background: #050f0a;
   position: relative;
 }
 
-.loading-shape-photo {
+/* Photo inside the square — only visible after impact */
+.ls-shape-photo {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top center;
   border-radius: inherit;
+  opacity: 0;
+  /* Photo loads right after bullet impact (~1.73s) */
+  animation: ls-photo-reveal 0.55s ease-out 1.72s both;
 }
 
-.loading-shape-ring {
+.ls-ring {
   position: absolute;
   border-radius: 50%;
   border: 1.5px solid transparent;
 }
-.loading-shape-ring-1 {
-  width: 140px;
-  height: 140px;
-  border-color: rgba(99, 102, 241, 0.35) transparent rgba(99, 102, 241, 0.35) transparent;
-  animation: rotate-slow 4s linear infinite;
+.ls-ring-1 {
+  width: 148px;
+  height: 148px;
+  border-color: rgba(16, 185, 129, 0.35) transparent rgba(16, 185, 129, 0.35) transparent;
+  animation: ls-shape-rotate 4s linear infinite;
 }
-.loading-shape-ring-2 {
-  width: 190px;
-  height: 190px;
-  border-color: transparent rgba(139, 92, 246, 0.25) transparent rgba(139, 92, 246, 0.25);
-  animation: rotate-slow 7s linear infinite reverse;
+.ls-ring-2 {
+  width: 196px;
+  height: 196px;
+  border-color: transparent rgba(5, 150, 105, 0.25) transparent rgba(5, 150, 105, 0.25);
+  animation: ls-shape-rotate 7s linear infinite reverse;
 }
 
-/* ── Content ── */
-.loading-content {
+/* ─────────────────────────────────────────
+   TEXT CONTENT
+───────────────────────────────────────── */
+.ls-content {
   position: relative;
   z-index: 1;
   display: flex;
@@ -104,10 +210,10 @@
   align-items: center;
   gap: var(--space-3);
   text-align: center;
-  margin-top: 160px; /* clear of the geometric shape */
+  margin-top: 172px;
 }
 
-.loading-initials {
+.ls-initials {
   font-family: var(--font-display);
   font-size: var(--text-sm);
   font-weight: 700;
@@ -118,10 +224,11 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
   padding: var(--space-1) var(--space-4);
-  animation: fadeInUp 0.6s 0.2s both;
+  opacity: 0;
+  animation: fadeInUp 0.55s ease 2.0s both;
 }
 
-.loading-name {
+.ls-name {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 5vw, var(--text-4xl));
   font-weight: 800;
@@ -130,59 +237,135 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: fadeInUp 0.6s 0.35s both;
+  opacity: 0;
+  animation: fadeInUp 0.55s ease 2.15s both;
 }
 
-.loading-role {
+.ls-role {
   font-size: var(--text-base);
   color: var(--color-text-muted);
   letter-spacing: 0.05em;
-  animation: fadeInUp 0.6s 0.5s both;
+  opacity: 0;
+  animation: fadeInUp 0.55s ease 2.3s both;
 }
 
-/* Progress bar */
-.loading-progress {
+.ls-progress {
   width: 200px;
   height: 2px;
   background: var(--color-bg-glass);
   border-radius: var(--radius-full);
   overflow: hidden;
   margin-top: var(--space-6);
-  animation: fadeInUp 0.6s 0.65s both;
+  opacity: 0;
+  animation: fadeInUp 0.55s ease 2.45s both;
 }
 
-.loading-progress-bar {
+.ls-progress-bar {
   height: 100%;
   background: var(--gradient-primary);
   border-radius: var(--radius-full);
-  animation: progress-fill 2.2s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
-  box-shadow: 0 0 10px rgba(99, 102, 241, 0.6);
+  animation: ls-progress-fill 0.9s cubic-bezier(0.4, 0, 0.2, 1) 2.45s both;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
 }
 
-@keyframes progress-fill {
+.ls-hint {
+  font-size: var(--text-xs);
+  color: var(--color-text-dim);
+  letter-spacing: 0.08em;
+  opacity: 0;
+  animation: fadeInUp 0.55s ease 2.6s both;
+  margin-top: var(--space-2);
+}
+
+/* ─────────────────────────────────────────
+   KEYFRAMES
+───────────────────────────────────────── */
+
+/* Gun slides in from off-screen left */
+@keyframes ls-gun-slide-in {
+  from { transform: translateY(-50%) translateX(-400px); opacity: 0; }
+  to   { transform: translateY(-50%) translateX(0);      opacity: 1; }
+}
+
+/* Trigger pulls back (rotates ~20deg) */
+@keyframes ls-trigger-pull {
+  0%   { transform: rotate(0deg);   }
+  60%  { transform: rotate(22deg);  }
+  100% { transform: rotate(20deg);  }
+}
+
+/* Muzzle flash pops and fades */
+@keyframes ls-flash {
+  0%   { opacity: 0;   transform: translateY(-50%) scale(0.4); }
+  30%  { opacity: 1;   transform: translateY(-50%) scale(1.2); }
+  100% { opacity: 0;   transform: translateY(-50%) scale(0.8); }
+}
+
+/* Gun recoil kick — operates purely on horizontal X axis */
+@keyframes ls-gun-recoil {
+  0%   { transform: translateX(0); }
+  40%  { transform: translateX(-14px); }
+  100% { transform: translateX(0); }
+}
+
+/* Bullet flies from gun barrel entrance (left: 378px) to screen center (50vw).
+   Starts invisible (0% opacity: 0), becomes visible upon release (1% opacity: 1),
+   reaches center square, and hits with impact. */
+@keyframes ls-bullet-fly {
+  0%   { opacity: 0; transform: translateY(-50%) translateX(0px); }
+  1%   { opacity: 1; transform: translateY(-50%) translateX(0px); }
+  90%  { opacity: 1; transform: translateY(-50%) translateX(calc(50vw - 396px)); }
+  100% { opacity: 0; transform: translateY(-50%) translateX(calc(50vw - 384px)); }
+}
+
+/* Impact flash on the square */
+@keyframes ls-impact {
+  0%   { opacity: 0.9; transform: scale(0.7); }
+  40%  { opacity: 0.7; transform: scale(1.3); }
+  100% { opacity: 0;   transform: scale(1.0); }
+}
+
+/* Rotating square */
+@keyframes ls-shape-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Square glow pulse */
+@keyframes ls-shape-glow {
+  0%, 100% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); }
+  50%       { box-shadow: 0 0 55px rgba(16, 185, 129, 0.7); }
+}
+
+/* Photo reveal after bullet hit */
+@keyframes ls-photo-reveal {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ls-progress-fill {
   from { width: 0%; }
   to   { width: 100%; }
 }
 
-.loading-hint {
-  font-size: var(--text-xs);
-  color: var(--color-text-dim);
-  letter-spacing: 0.08em;
-  animation: fadeInUp 0.6s 0.8s both;
-  margin-top: var(--space-2);
-}
-
 /* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
-  .loading-shape-inner,
-  .loading-shape-ring-1,
-  .loading-shape-ring-2,
-  .loading-orb-1,
-  .loading-orb-2 {
+  .ls-gun-wrap,
+  .ls-trigger,
+  .ls-muzzle-flash,
+  .ls-bullet,
+  .ls-impact-flash,
+  .ls-ring-1,
+  .ls-ring-2,
+  .ls-shape-inner {
     animation: none !important;
   }
-  .loading-progress-bar {
-    width: 100%;
-    animation: none !important;
-  }
+  .ls-shape-photo  { opacity: 1 !important; }
+  .ls-initials,
+  .ls-name,
+  .ls-role,
+  .ls-progress,
+  .ls-hint         { opacity: 1 !important; animation: none !important; }
+  .ls-progress-bar { width: 100% !important; animation: none !important; }
+  .ls-gun-wrap     { opacity: 0 !important; }
 }

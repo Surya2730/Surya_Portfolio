@@ -267,7 +267,7 @@ export default function ContactSection() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Alex Morgan"
+                    placeholder="Pranav Balaji P MA"
                     disabled={isSubmitting}
                     className={`form-input ${validationErrors.name ? 'input-error' : ''}`}
                     aria-invalid={Boolean(validationErrors.name)}
@@ -292,7 +292,7 @@ export default function ContactSection() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="alex@company.com"
+                    placeholder="pranav@company.com"
                     disabled={isSubmitting}
                     className={`form-input ${validationErrors.email ? 'input-error' : ''}`}
                     aria-invalid={Boolean(validationErrors.email)}

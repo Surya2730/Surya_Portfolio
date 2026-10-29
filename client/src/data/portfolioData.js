@@ -11,11 +11,11 @@
 export const PERSONAL_INFO = {
   name: "Surya Kumar T",
   initials: "SK",
-  role: "Full Stack Developer | Aerele Technologies | Java & MERN | CSBS",
   headline: "Software Developer Intern @ Aerele Technologies & Full-Stack Architect",
+  role: "Full Stack Developer | Aerele Technologies | Java | MERN | CSBS",
   shortBio:
     "Software Developer Intern at Aerele Technologies and final-year B.Tech CSBS student at Bannari Amman Institute of Technology (8.3 CGPA). Solved 400+ problems on LeetCode. Skilled in MERN stack, Core Java, and enterprise development with Frappe and ERPNext.",
-  photoUrl: "/Coat image with bb.jpg",
+  photoUrl: "/profile.jpg",
   email: "suryaselvam.219@gmail.com",
   github: "https://github.com/Surya2730",
   linkedin: "https://www.linkedin.com/in/suryakumardev/",
@@ -199,6 +199,7 @@ export const ACHIEVEMENTS = [
       "Consistent problem-solving in Data Structures, Algorithms, Dynamic Programming, and Java on LeetCode with 400+ solutions submitted.",
     type: "Coding",
     link: "https://leetcode.com/u/surya_1929/",
+    certificateUrl: null,
   },
   {
     id: "ideathon-2025",
@@ -208,6 +209,17 @@ export const ACHIEVEMENTS = [
     description:
       "Awarded the Thematic Winner title for innovative problem solving and system design addressing pressing institutional technological challenges.",
     type: "Award",
+    certificateUrl: "/Ideathon 2025 Original Acheive.pdf",
+  },
+  {
+    id: "ideathon-2024",
+    title: "Ideathon 2024 Participant",
+    organization: "National Innovation Challenge",
+    date: "2024",
+    description:
+      "Competed in the 2024 edition of the Ideathon, demonstrating early-stage innovation and team collaboration skills.",
+    type: "Award",
+    certificateUrl: "/Ideathon 2024.pdf",
   },
   {
     id: "nptel-python",
@@ -217,15 +229,17 @@ export const ACHIEVEMENTS = [
     description:
       "Secured 87% with Silver Medal certification, demonstrating strong command over algorithmic problem solving, data structures, and Python programming.",
     type: "Certification",
+    certificateUrl: "/The Joy of Computing using Python.pdf",
   },
   {
-    id: "ithink-2025",
+    id: "icet-sema-2026",
     title: "Paper Presentation at ICET-SEMA-2026",
     organization: "International Conference (ICET-SEMA-2026)",
     date: "2026",
     description:
       "Authored and presented the research and engineering architecture of 'AN AI-ENABLED SMART AUDIT MANAGEMENT SYSTEM WITH LIVE LOCATION VERIFICATION' to an international audience of researchers and domain experts.",
     type: "Publication",
+    certificateUrl: "/International Conference 2026.pdf",
   },
   {
     id: "ithink-2025",
@@ -235,5 +249,6 @@ export const ACHIEVEMENTS = [
     description:
       "Authored and presented the research and engineering architecture of 'KnowMyCampus — Personalized Chatbot' to an international audience of researchers and domain experts.",
     type: "Publication",
+    certificateUrl: "/mini_proj paper presentation.pdf",
   },
 ];

@@ -18,20 +18,28 @@
 
 .about-photo-wrapper {
   position: relative;
-  width: 220px;
-  height: 250px;
-  border-radius: var(--radius-lg);
+  /* Perfect circle — width = height */
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
   overflow: hidden;
   margin-bottom: var(--space-5);
-  border: 2px solid rgba(99, 102, 241, 0.4);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.25);
+  border: 3px solid rgba(16, 185, 129, 0.5);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.55),
+              0 0 30px rgba(16, 185, 129, 0.3),
+              inset 0 0 20px rgba(16, 185, 129, 0.08);
+  background: radial-gradient(circle at center, rgba(16,185,129,0.08) 0%, transparent 70%);
+  flex-shrink: 0;
 }
 
 .about-photo-img {
+  /* Stretch to fill the full circle — no cropping gaps */
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center top;
   transition: transform var(--ease-normal);
 }
 
@@ -42,9 +50,9 @@
 .about-photo-glow {
   position: absolute;
   inset: 0;
-  border-radius: var(--radius-lg);
+  border-radius: 50%;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent 65%, rgba(6, 6, 15, 0.7) 100%);
+  background: linear-gradient(180deg, transparent 70%, rgba(5, 15, 10, 0.5) 100%);
 }
 
 .about-photo-info {
@@ -224,21 +232,21 @@
 }
 
 .stat-icon-blue {
-  background: rgba(99, 102, 241, 0.15);
-  color: #818cf8;
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .stat-icon-violet {
-  background: rgba(139, 92, 246, 0.15);
-  color: #a78bfa;
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: rgba(5, 150, 105, 0.15);
+  color: #6ee7b7;
+  border: 1px solid rgba(5, 150, 105, 0.3);
 }
 
 .stat-icon-cyan {
-  background: rgba(6, 182, 212, 0.15);
-  color: #22d3ee;
-  border: 1px solid rgba(6, 182, 212, 0.3);
+  background: rgba(52, 211, 153, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.3);
 }
 
 .stat-icon-amber {

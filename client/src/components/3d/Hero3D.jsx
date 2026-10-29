@@ -75,7 +75,7 @@ function FuturisticCore() {
       <mesh ref={outerMesh} scale={1.35}>
         <icosahedronGeometry args={[1, 3]} />
         <MeshDistortMaterial
-          color="#6366f1"
+          color="#10b981"
           attach="material"
           distort={0.4}
           speed={2}
@@ -89,9 +89,9 @@ function FuturisticCore() {
       <mesh ref={innerMesh} scale={0.95}>
         <octahedronGeometry args={[1, 0]} />
         <meshStandardMaterial
-          color="#06b6d4"
+          color="#34d399"
           wireframe={true}
-          emissive="#06b6d4"
+          emissive="#34d399"
           emissiveIntensity={0.6}
         />
       </mesh>
@@ -100,8 +100,8 @@ function FuturisticCore() {
       <mesh ref={ringRef} scale={1.9}>
         <torusGeometry args={[1, 0.018, 16, 64]} />
         <meshStandardMaterial
-          color="#8b5cf6"
-          emissive="#8b5cf6"
+          color="#059669"
+          emissive="#059669"
           emissiveIntensity={0.8}
         />
       </mesh>
@@ -141,7 +141,7 @@ function SubtleParticles({ count = 35 }) {
       </bufferGeometry>
       <pointsMaterial
         size={0.035}
-        color="#a5b4fc"
+        color="#6ee7b7"
         transparent
         opacity={0.6}
         sizeAttenuation
@@ -213,8 +213,8 @@ export default function Hero3D() {
             {/* Studio Lighting Setup */}
             <ambientLight intensity={0.7} />
             <directionalLight position={[5, 6, 4]} intensity={1.5} color="#ffffff" />
-            <pointLight position={[-4, -3, -2]} color="#06b6d4" intensity={2} />
-            <pointLight position={[4, -2, 2]} color="#8b5cf6" intensity={2.5} />
+            <pointLight position={[-4, -3, -2]} color="#34d399" intensity={2} />
+            <pointLight position={[4, -2, 2]} color="#059669" intensity={2.5} />
 
             {/* Futuristic 3D Mesh Core */}
             <FuturisticCore />
